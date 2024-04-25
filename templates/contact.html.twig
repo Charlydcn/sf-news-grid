@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/contact.css')}}">
+{% endblock stylesheets %}
+
+{% block body %}
+    <section class="contact-container">
+        {{ form_start(contactForm, {'attr': {'id': 'contact-form'}}) }}
+
+            <h1 class="full-width">TELL US EVERYTHING</h1>
+            <p class="mandatory-text">*Mandatory fields</p>
+
+            <div class="full-width">
+                {{ form_label(contactForm.subject) }}
+                {{ form_widget(contactForm.subject) }}
+            </div>
+
+            <div class="half-width">
+                {{ form_label(contactForm.first_name) }}
+                {{ form_widget(contactForm.first_name) }}
+            </div>
+
+            <div class="half-width">
+                {{ form_label(contactForm.last_name) }}
+                {{ form_widget(contactForm.last_name) }}
+            </div>
+
+            <div class="third-width">
+                {{ form_label(contactForm.country) }}
+                {{ form_widget(contactForm.country) }}
+            </div>
+
+            <div class="third-width">
+                {{ form_label(contactForm.email) }}
+                {{ form_widget(contactForm.email) }}
+            </div>
+
+            <div class="third-width">
+                {{ form_label(contactForm.phone_number) }}
+                {{ form_widget(contactForm.phone_number) }}
+            </div>
+
+            <div class="two-thirds-width">
+                {{ form_label(contactForm.website) }}
+                {{ form_widget(contactForm.website) }}
+            </div>
+
+            <div class="third-width">
+                {{ form_label(contactForm.company_name) }}
+                {{ form_widget(contactForm.company_name) }}
+            </div>
+
+            <div class="full-width">
+                {{ form_label(contactForm.content) }}
+                {{ form_widget(contactForm.content) }}
+            </div>
+
+            {{ form_widget(contactForm.send) }}
+
+        {{ form_end(contactForm) }}
+
+
+        <aside>
+            <h2>CONTACT INFOS</h2>
+            <ul class="list">
+                <li>info@newsgrid.com</li>
+                <li>123 Main Street, Anytown, USA</li>
+                <li>+1 (555) 123-4567</li>
+            </ul>
+        </aside>
+    </section>
+{% endblock %}

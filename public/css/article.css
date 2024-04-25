@@ -1,0 +1,53 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/* article.html ------------------------------------------------------------------------------------------ */
+main > .container:first-of-type {
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(3, 1fr);
+    gap:1rem;
+    margin: 2rem auto;
+}
+
+main > .container:first-of-type img {
+    width: 100%;
+    margin-bottom: 0.5rem;
+}
+
+main > .container:first-of-type > article {
+    grid-area: span 2 / span 2;
+    background-color: white;
+}
+
+main > .container:first-of-type > aside > :first-child {
+    background-color: white;
+    margin-bottom: 1rem;
+}
+
+main > .container:first-of-type > aside > :last-child {
+    background-color: var(--yellow);
+    color: white;
+}
+
+main > .container:first-of-type address {
+    background-color: var(--lightgrey);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+/* ----------------------------------------------------------------------------------------------------- */
+
+@media screen and (max-width: 991px) {
+
+    main > .container:first-of-type {
+        grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+    }
+
+    main > .container:first-of-type > article {
+        grid-area: span 2 / span 2;
+    }
+
+    main > .container:first-of-type aside {
+        grid-area: span 1 / span 2;
+    }
+}

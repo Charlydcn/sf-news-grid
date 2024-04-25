@@ -1,0 +1,61 @@
+/* ----------------------------------------------------------------------------------------------------- */
+/* contact.html ---------------------------------------------------------------------------------------- */
+.contact-container {
+    margin: 2rem auto;
+    display: grid;
+    grid-template: repeat(2, 1fr) / repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.contact-container form {
+    grid-area: span 2 / span 3;
+}
+
+.contact-container aside {
+    grid-area: span 2 / span 1;
+}
+
+#contact-form {
+    background-color: white;
+    padding: 1rem;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    max-width: 50rem;
+}
+
+.mandatory-text {
+    position: absolute;
+    color: var(--red);
+    font-weight: 500;
+    top: .5rem;
+    right: .75rem;
+    font-family: 'Staatliches', sans-serif;
+    font-style: italic;
+    letter-spacing: 1px;
+    opacity: 0.8;
+}
+
+#contact-form *:not(h1):not(label) {
+    font-family: 'Lato';
+    font-size: 1rem;
+}
+/* ----------------------------------------------------------------------------------------------------- */
+
+@media screen and (max-width: 768px) {
+    .contact-container {
+        grid-template: repeat(1, 1fr) / repeat(4, 1fr);
+    }
+
+    .contact-container form {
+        grid-area: span 1 / span 4;
+    }
+    
+    .contact-container aside {
+        grid-area: span 1 / span 4;
+    }
+    
+    .mandatory-text {
+        position: unset;
+        grid-area: span 1 / span 6;
+        margin: -1rem 0 1rem;
+    }
+}

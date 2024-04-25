@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/home.css')}}">
+{% endblock stylesheets %}
+
+{% block body %}
+    <header>
+        <!-- intro -->
+        <section>
+            <article>
+                <h4 class="sports">SPORTS</h4>
+                <h1>SOME SPORTS ARTICLE</h1>
+                <p>
+                    Lorem ipsum dolor sit amet consectetur apidisicing elit. Dolores molestias blanditiis natus vero, sapiente odio.
+                    Voluptatibus, ea! lure in enim iusto voluptates debitis at commodi amet dolorum natus, hic eveniet!
+                </p>
+                <a class="btn-primary" href="/article.html">Read More</a>
+            </article>
+        </section>
+    </header>
+
+    <section>
+        <h2>EDITOR PICKS</h2>
+
+        <div class="grid-container">
+            {% for article in articles %}
+            <article class="card">
+                <img src="{{ asset('/img/articles_images/' ~ article.img) }}">
+
+                <div>
+                    <h4>{{ article.category.name }}</h4>
+
+                    <h3>
+                        <a href="{{ path('show_article', {'id': article.id} )}}">
+                            {{ article.title }}
+                        </a>
+                    </h3>
+
+                    <p>{{ article.description }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block javacripts %}
+    <script src="{{ asset('/js/apiArticles.js')}}"></script>
+{% endblock javacripts %}

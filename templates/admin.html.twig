@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+    <ul class="container small-container">
+        <h1>Admin</h1>
+
+        <li>
+            <a class="btn-primary" href="{{ path('articles')}}">Articles</a>
+            <a class="btn-primary" href="{{ path('categories')}}">Categories</a>
+        </li>
+    </ul>
+{% endblock %}

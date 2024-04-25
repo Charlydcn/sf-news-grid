@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <div class="container small-container">
+        <a class="underline-hover" href="{{ path('admin') }}">
+            <i class="fa-solid fa-chevron-left"></i>
+            Admin
+        </a>
+
+        <h1>{{ article.title }}</h1>
+
+        <article class="card">
+            <img src="{{ asset('/img/articles_images/' ~ article.img) }}">
+
+            <div>
+                <h4 class="sports">{{ article.category.name }}</h4>
+                <h3>
+                    <a href="{{ path('show_article', {'id': article.id})}}">{{ article.title }}</a>
+                </h3>
+                <p>{{ article.description }}</p>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <ul class="action-ul">
+                        <li>
+                            <a href="{{ path('show_article', {'id': article.id})}}">
+                                <i class="fa-solid fa-eye"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ path('edit_article', {'id': article.id})}}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </li>
+                    </ul>
+                {% endif %}
+            </div>
+        </article>
+    </div>
+{% endblock %}

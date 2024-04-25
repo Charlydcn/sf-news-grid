@@ -1,0 +1,96 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('/css/article.css')}}">
+{% endblock stylesheets %}
+
+{% block body %}
+    <div class="container">
+        <article>
+            <header>
+                <img src="{{ asset('/img/weirdguy.jpg')}}" alt="">
+                <h1>OUR EFFICIENT ENTERTAINMENT SERVICE DELIVERY</h1>
+            </header>
+
+            <address>
+                <p>
+                    <i class="fa-solid fa-user"></i>
+                    Written by Clifford Ouma
+                    <br>
+                    January 10th 2019
+                </p>
+                
+                <h4 class="entertainment">ENTERTAINMENT</h4>
+            </address>
+
+            <p>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, esse reiciendis. Magnam labore doloremque aliquid beatae ut eveniet illo dicta
+                cupiditate quasi, consequuntur quos expedita. Sint quasi asperiores sapiente quo cupiditate fugiat laudantium illum in iusto doloremque animi quaerat
+                ea molestias, necessitatibus vitae vel nam eum et error facere minima.
+            </p>
+
+            <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem laboriosam veritatis doloremque eligendi temporibus magni inventore animi, facere,
+                natus reprehenderit quo quibusdam iusto, nam cumque? Officiis, eaque quis error alias quos vitae dolor commodi fugit obcaecati dolorum veritatis?
+                Ea, quas animi. Harum eius sint maxime ratione magni unde ea vitae quam esse modi deleniti enim quas quo accusamus, temporibus aut totam numquam expedita
+                officia, id earum praesentium dolore. Ad, minus id hic officiis totam tempore molestiae accusamus nihil deleniti repellendus nisi delectus obcaecati
+                consequatur error aspernatur esse est magnam. Repellendus dicta perspiciatis voluptatibus blanditiis sunt, quod ullam quam et.
+            </p>
+
+        </article>
+
+        <aside>
+            <article>
+                <h3>CATEGORIES</h3>
+                <ul class="list">
+                    <li>
+                        <a>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            Sports
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            Entertainment
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            Technology
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            Fashion
+                        </a>
+                    </li>
+                    
+                    <li>
+                        <a>
+                            <i class="fa-solid fa-chevron-right"></i>
+                            Trade
+                        </a>
+                    </li>
+                </ul>
+            </article>
+
+            <article>
+                <h3>JOIN OUR CLUB</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore, recusandae?</p>
+                <button class="btn-tertiary">Join now</button>
+            </article>
+        </aside>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('/js/article.js')}}"></script>
+{% endblock javascripts %}

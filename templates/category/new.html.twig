@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Category{% endblock %}
+
+{% block body %}
+<div class="container small-container">
+    <a class="underline-hover" href="{{ path('categories') }}">
+        <i class="fa-solid fa-chevron-left"></i>
+        Categories list
+    </a>
+
+    <h1>New Category</h1>
+
+    {{ include('category/_form.html.twig') }}
+
+</div>
+{% endblock %}

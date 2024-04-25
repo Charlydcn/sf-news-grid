@@ -1,0 +1,24 @@
+{{ form_start(form) }}
+    
+    <div class="full-width">
+        {{ form_label(form.title)}}
+        {{ form_widget(form.title) }}
+    </div>
+
+    <div class="full-width">
+        {{ form_label(form.category)}}
+        {{ form_widget(form.category) }}
+    </div>
+
+    <div class="full-width">
+        {{ form_label(form.img)}}
+        {{ form_widget(form.img) }}
+    </div>
+    
+    <div class="full-width">
+        {{ form_label(form.description)}}
+        {{ form_widget(form.description) }}
+    </div>
+    
+    <button class="btn full-width">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}

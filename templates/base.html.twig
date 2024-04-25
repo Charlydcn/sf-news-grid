@@ -2,18 +2,250 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        {# -- google fonts ------------------------------------------------- #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Staatliches&display=swap" rel="stylesheet">
+        {# ---------------------------------------------------------------- #}
+
+        {# -- font awesome ------------------------------------------------- #}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        {# ---------------------------------------------------------------- #}
+    
+        <title>NewsGrid - {% block title %}!{% endblock %}</title>
+
+        <link rel="stylesheet" href="{{ asset('/css/style.css')}}">
         {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div id="flash-messages">
+            {# flash message displaying #}
+            {% for message in app.flashes('success') %}
+                <div class="flash flash-success">
+                    {{ message }}
+                    <div class="flash-progress flash-progress-success"></div>
+                </div>
+            {% endfor %}
+    
+            {% for message in app.flashes('warning') %}
+                <div class="flash flash-warning">
+                    {{ message }}
+                    <div class="flash-progress flash-progress-warning"></div>
+                </div>
+            {% endfor %}
+    
+            {% for message in app.flashes('error') %}
+                <div class="flash flash-error">
+                    {{ message }}
+                    <div class="flash-progress flash-progress-error"></div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <aside class="side-btns-container">
+            <ul>
+                <li>
+                    {% if app.user %}
+                        <a class="red" href="{{ path('app_logout')}}">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            Log out
+                        </a>
+                    {% else %}
+                        <a class="red" href="{{ path('app_login')}}">
+                            <i class="fa-solid fa-circle-user"></i>
+                            Log in
+                        </a>
+                    {% endif %}
+                </li>
+
+                <li>
+                    <a class="yellow" href="{{ path('app_logout')}}">
+                        {# <i class="fa-solid fa-user"></i> #}
+                        <i class="fa-regular fa-pen-to-square"></i>
+                        Register
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+        <nav>
+            <div class="container">
+                <!-- logo -->
+                <a href="{{ path('home')}}">
+                    <img src="{{ asset('/img/logotext-dark.png')}}">
+                </a>
+        
+                <!-- links -->
+                <div id="desktop-nav">
+                    <!-- social medias -->
+                    <ul class="social-container">
+                        <li>
+                            <a class="link-social" href="https://facebook.com" target="_blank">
+                                <i class="fa-brands fa-facebook"></i>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a class="link-social" href="https://x.com" target="_blank">
+                                <i class="fa-brands fa-twitter"></i>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a class="link-social" href="https://instagram.com" target="_blank">
+                                <i class="fa-brands fa-instagram"></i>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a class="link-social" href="https://linkedin.com" target="_blank">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
+                        </li>
+                    </ul>
+            
+                    <!-- nav links -->
+                    <ul class="nav-links">
+                        <li>
+                            <a href="{{ path('home')}}">
+                                Home
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ path('about')}}">
+                                About
+                            </a>
+                        </li>                        
+                    </ul>
+                </div>
+            </div>
+    
+            <ul id="mobile-nav">
+                <button id="close-btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+    
+                <li>
+                    <a href="{{ path('home')}}">Home</a>
+                </li>
+                
+                <li>
+                    <a href="{{ path('about')}}">About</a>
+                </li>
+                
+                <li>
+                    <a href="{{ path('contact')}}">Contact</a>
+                </li>
+            </ul>
+    
+            <button id="nav-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav>
+
+        <main>
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer>
+            <ul class="container">
+                <li>
+                    <article>
+                        <img src="{{ asset('/img/logonoir-light.png')}}">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius praesentium error voluptatibus adipisci quod temporibus ut quia. Quidem, eius. Autem!</p>
+                    </article>
+    
+                    <!-- social medias -->
+                    <article>
+                        <ul class="social-container">
+                            <li>
+                                <a class="link-social" href="https://facebook.com" target="_blank">
+                                    <i class="fa-brands fa-facebook"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a class="link-social" href="https://x.com" target="_blank">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a class="link-social" href="https://instagram.com" target="_blank">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                            </li>
+                            
+                            <li>
+                                <a class="link-social" href="https://linkedin.com" target="_blank">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </article>
+                </li>
+    
+                <li>
+                    <article>
+                        <h3>EMAIL NEWSLETTER</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+
+                        {{ form_start(newsletterForm) }}
+                            {{ form_widget(newsletterForm.email) }}
+                            {{ form_widget(newsletterForm.submit) }}
+                        {{ form_end(newsletterForm) }}
+                    </article>
+                </li>
+    
+                <li>
+                    <article>
+                        <h3>SITE LINKS</h3>
+                        <ul class="list">
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li>
+                                    <a href="{{ path('admin')}}">Admin</a>
+                                </li>
+                            {% endif %}
+                            <li>
+                                <a href="#">Help and support</a>
+                            </li>
+    
+                            <li>
+                                <a href="#">Privacy policy</a>
+                            </li>
+    
+                            <li>
+                                <a href="{{ path('about')}}">About us</a>
+                            </li>
+    
+                            <li>
+                                <a href="{{ path('contact')}}">Contact</a>
+                            </li>
+                        </ul>
+                    </article>
+                </li>
+    
+                <li>
+                    <article>
+                        <h2>JOIN OUR CLUB</h2>
+                        <p>Lorem ipsum dolor, sit amet consectetur apidisicing elit. Omnis, ducimus.</p>
+                        <button class="btn-secondary">Join Now</button>
+                    </article>
+                </li>
+            </ul>
+    
+            <p class="container">Copyright &copy; 2020, All right reserved</p>
+        </footer>
+
+        <script src="{{ asset('/bib/jquery/jquery.min.js')}}"></script>
+        <script src="{{ asset('/js/script.js')}}"></script>
+        {% block javascripts %}
+        {% endblock %}
     </body>
 </html>

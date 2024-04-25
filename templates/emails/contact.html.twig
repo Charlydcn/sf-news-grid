@@ -1,0 +1,10 @@
+<h1>New Contact Request</h1>
+<p><strong>Subject:</strong> {{ data.subject }}</p>
+<p><strong>First Name:</strong> {{ data.first_name }}</p>
+<p><strong>Last Name:</strong> {{ data.last_name }}</p>
+<p><strong>Country:</strong> {{ data.country | default('Not Provided') }}</p>
+<p><strong>Email:</strong> {{ data.email }}</p>
+<p><strong>Phone Number:</strong> {{ data.phone_number | default('Not Provided') }}</p>
+<p><strong>Website:</strong> {{ data.website | default('Not Provided') }}</p>
+<p><strong>Company Name:</strong> {{ data.company_name | default('Not Provided') }}</p>
+<p><strong>Content:</strong> {{ data.content }}</p>

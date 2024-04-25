@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article index{% endblock %}
+
+{% block body %}
+    <div class="container big-container">
+        <a class="underline-hover" href="{{ path('admin') }}">
+            <i class="fa-solid fa-chevron-left"></i>
+            Admin
+        </a>
+
+        <h1>Articles</h1>
+
+        <a class="underline-hover" href="{{ path('new_article') }}">
+            <i class="fa-solid fa-circle-plus"></i>    
+            New article
+        </a>
+    
+        <div class="flex-container">
+            {% for article in articles %}
+                <article class="card">
+                    <img src="{{ asset('/img/articles_images/' ~ article.img) }}">
+    
+                    <div>
+                        <h4 class="sports">{{ article.category.name }}</h4>
+                        <h3>
+                            <a href="{{ path('show_article', {'id': article.id})}}">{{ article.title }}</a>
+                        </h3>
+                        {# <p>{{ article.description }}</p> #}
+    
+                        <ul class="action-ul">
+                            <li>
+                                <a href="{{ path('show_article', {'id': article.id})}}">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </li>
+    
+                            <li>
+                                <a href="{{ path('edit_article', {'id': article.id})}}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                            </li>
+
+                            <li>
+                                {{ include('article/_delete_form.html.twig', {'icon': true}) }}
+                            </li>
+                        </ul>
+                    </div>
+                </article>
+            {% else %}
+                <li>No article found</li>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
