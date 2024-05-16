@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Article;
-use App\ImageOptimizer;
+use App\Service\ImageOptimizer;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,6 +18,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 #[Route('/article')]
 class ArticleController extends AbstractController
 {
+    private $imageOptimizer;
+
+    public function __construct(ImageOptimizer $imageOptimizer)
+    {
+        $this->imageOptimizer = $imageOptimizer;
+    }
+
     #[Route('/admin/articles', name: 'articles', methods: ['GET'])]
     public function index(ArticleRepository $articleRepo): Response
     {
@@ -56,11 +63,16 @@ class ArticleController extends AbstractController
                 $safeFilename = $slugger->slug($originalFilename);
                 $newFilename = $safeFilename.'-'.uniqid().'.'.$imgFile->guessExtension();
 
+                $temporaryPath = $this->getParameter('articles_directory') . '/' . $newFilename;
+
                 try {
+                    
                     $imgFile->move(
                         $this->getParameter('articles_directory'),
                         $newFilename
                     );
+
+                    $this->imageOptimizer->resize($temporaryPath, 500, 300);
                 } catch (FileException $e) {
                     dd('Erreur upload image');
                 }
@@ -149,12 +161,17 @@ class ArticleController extends AbstractController
         $originalImg,
         Article $article,
         SluggerInterface $slugger,
-        ValidatorInterface $validator
+        ValidatorInterface $validator,
     ): void
     {
         if($originalImg) {
-            unlink($this->getParameter('articles_directory') . "/" . $originalImg);
+            $filePath = $this->getParameter('articles_directory') . "/" . $originalImg;
+
+            if (file_exists($filePath)) {
+                unlink($filePath);
+            }
         }
+        
     
         $violations = $validator->validate($imgFile, new Assert\File([
             'maxSize' => '5120k',
@@ -170,8 +187,8 @@ class ArticleController extends AbstractController
     
             try {
                 $imgFile->move($this->getParameter('articles_directory'), $newFilename);
-                // Redimensionner l'image
-                $this->imageOptimizer->resize($temporaryPath);
+                // Redimensionner l'image 
+                $this->imageOptimizer->resize($temporaryPath, 500, 300);
                 $article->setImg($newFilename);
             } catch (FileException $e) {
                 // En cas d'erreur, revenir à l'image originale si possible
