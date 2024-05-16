@@ -75,9 +75,6 @@ function trimString(title, maxLength) {
     return trimmed + '...';
 }
 
-
-apiCall('us', 'en', '7');
-
-console.log('test')
-
+console.log(apiCall('us', 'en', '7'));
+console.log('test');
 // --------------------------------------------------------------------------------------------------------

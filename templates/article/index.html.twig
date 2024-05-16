@@ -18,8 +18,10 @@
     
         <div class="flex-container">
             {% for article in articles %}
+                {% set img = article.img ? article.img : 'missing.jpg' %}
+                
                 <article class="card">
-                    <img src="{{ asset('/img/articles_images/' ~ article.img) }}">
+                    <img src="{{ asset('/img/articles_images/' ~ img) }}">
     
                     <div>
                         <h4 class="sports">{{ article.category.name }}</h4>

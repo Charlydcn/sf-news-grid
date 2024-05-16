@@ -97,7 +97,7 @@ class ArticleController extends AbstractController
     {
         $originalImg = $article->getImg();
 
-        $form = $this->createForm(ArticleType::class, $article, ['is_edit' => true]);
+        $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
@@ -149,8 +149,9 @@ class ArticleController extends AbstractController
 
     ): void
     {
-        
-        unlink($this->getParameter('articles_directory') . "/" . $originalImg);
+        if($originalImg) {
+            unlink($this->getParameter('articles_directory') . "/" . $originalImg);
+        }
 
         $violations = $validator->validate($imgFile, new Assert\File([
             'maxSize' => '5120k',

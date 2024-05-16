@@ -17,8 +17,6 @@ class ArticleType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $isRequired = $options['is_edit'] ? false : true;
-        
         $builder
 
             ->add('title', TextType::class)
@@ -31,7 +29,7 @@ class ArticleType extends AbstractType
                 'data_class' => null,
                 'empty_data' => '',
                 'attr' => ['accept' => '.png, .jpeg, .jpg, .webp, .svg'],
-                'required' => $isRequired,
+                'required' => false,
             ])
 
             ->add('category', EntityType::class, [
@@ -44,7 +42,6 @@ class ArticleType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Article::class,
-            'is_edit' => false,
         ]);
     }
 }

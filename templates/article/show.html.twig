@@ -3,7 +3,7 @@
 {% block title %}Article{% endblock %}
 
 {% block body %}
-    <div class="container small-container">
+    <div class="container">
         <a class="underline-hover" href="{{ path('admin') }}">
             <i class="fa-solid fa-chevron-left"></i>
             Admin
@@ -23,12 +23,6 @@
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <ul class="action-ul">
-                        <li>
-                            <a href="{{ path('show_article', {'id': article.id})}}">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
-                        </li>
-
                         <li>
                             <a href="{{ path('edit_article', {'id': article.id})}}">
                                 <i class="fa-solid fa-pen-to-square"></i>
