@@ -21,59 +21,28 @@
     <script>
         $(document).ready(function() {
             let editorInstance;
-    
+
             ClassicEditor
-                .create(document.querySelector('#article_description'), {
-                    toolbar: {
-                        items: [
-                            'heading', '|',
-                            'bold', 'italic', 'underline', 'strikethrough', '|',
-                            'link', '|',
-                            'bulletedList', 'numberedList', '|',
-                            'fontColor', 'fontBackgroundColor', '|',
-                            'blockQuote', '|',
-                            'undo', 'redo'
-                        ]
-                    },
-                    heading: {
-                        options: [
-                            { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-                            { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-                            { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-                            { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' }
-                        ]
-                    },
-                    fontColor: {
-                        colors: [
-                            { color: 'black', label: 'Black' },
-                            { color: 'red', label: 'Red' },
-                            { color: 'green', label: 'Green' },
-                            { color: 'blue', label: 'Blue' }
-                        ]
-                    },
-                    removePlugins: ['Image', 'ImageToolbar', 'ImageCaption', 'ImageStyle', 'ImageResize', 'ImageUpload', 'CKFinder'],
-                })
+                .create(document.querySelector('#article_description'))
                 .then(editor => {
                     editorInstance = editor;
                 })
                 .catch(error => {
-                    console.error('CKEditor error:', error);
+                    console.error(error);
                 });
     
             $('form').on('submit', function(e) {
-                e.preventDefault(); // Empêcher la soumission du formulaire
-    
+                e.preventDefault();
+
                 var editorData = editorInstance.getData();
     
                 if (!editorData.trim()) {
                     alert('Please enter the description.');
                     return;
                 }
-    
+
                 this.submit();
             });
         });
     </script>
-    
-    
 {% endblock javascripts %}

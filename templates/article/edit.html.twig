@@ -3,7 +3,7 @@
 {% block title %}Edit Article{% endblock %}
 
 {% block body %}
-    <div class="container small-container">
+    <div class="container">
         <a class="underline-hover" href="{{ path('articles') }}">
             <i class="fa-solid fa-chevron-left"></i>
             Articles list
@@ -16,3 +16,35 @@
         {{ include('article/_delete_form.html.twig') }}
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('/bib/CKEditor/ckeditor.min.js')}}"></script>
+
+    <script>
+        $(document).ready(function() {
+            let editorInstance;
+
+            ClassicEditor
+                .create(document.querySelector('#article_description'))
+                .then(editor => {
+                    editorInstance = editor;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+    
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+
+                var editorData = editorInstance.getData();
+    
+                if (!editorData.trim()) {
+                    alert('Please enter the description.');
+                    return;
+                }
+
+                this.submit();
+            });
+        });
+    </script>
+{% endblock javascripts %}
