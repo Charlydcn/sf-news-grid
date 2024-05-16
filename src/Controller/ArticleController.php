@@ -3,14 +3,15 @@
 namespace App\Controller;
 
 use App\Entity\Article;
+use App\ImageOptimizer;
 use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
@@ -18,10 +19,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class ArticleController extends AbstractController
 {
     #[Route('/admin/articles', name: 'articles', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepo): Response
     {
         return $this->render('article/index.html.twig', [
-            'articles' => $articleRepository->findAll(),
+            'articles' => $articleRepo->findBy([], ['creationDate' => 'DESC']),
         ]);
     }
 
@@ -133,6 +134,9 @@ class ArticleController extends AbstractController
     public function delete(Request $request, Article $article, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$article->getId(), $request->request->get('_token'))) {
+            if($article->getImg()) {
+                unlink($this->getParameter('articles_directory') . "/" . $article->getImg());
+            }
             $entityManager->remove($article);
             $entityManager->flush();
         }
@@ -146,36 +150,39 @@ class ArticleController extends AbstractController
         Article $article,
         SluggerInterface $slugger,
         ValidatorInterface $validator
-
     ): void
     {
         if($originalImg) {
             unlink($this->getParameter('articles_directory') . "/" . $originalImg);
         }
-
+    
         $violations = $validator->validate($imgFile, new Assert\File([
             'maxSize' => '5120k',
             'mimeTypes' => ['image/jpg', 'image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'],
         ]));
-
+    
         if (count($violations) === 0) {
             $originalFilename = pathinfo($imgFile->getClientOriginalName(), PATHINFO_FILENAME);
             $safeFilename = $slugger->slug($originalFilename);
             $newFilename = $safeFilename.'-'.uniqid().'.'.$imgFile->guessExtension();
-
+    
+            $temporaryPath = $this->getParameter('articles_directory') . '/' . $newFilename;
+    
             try {
                 $imgFile->move($this->getParameter('articles_directory'), $newFilename);
+                // Redimensionner l'image
+                $this->imageOptimizer->resize($temporaryPath);
                 $article->setImg($newFilename);
             } catch (FileException $e) {
-                $article->setImg($orignalImg);
+                // En cas d'erreur, revenir à l'image originale si possible
+                $article->setImg($originalImg);
             }
         } else {
             foreach ($violations as $violation) {
-                // Ideally, add these validation messages back to the form
-                // However, this requires a bit more setup to correctly integrate with Symfony forms
-                // This is a simplified example
+                // Gérer les violations ici
             }
-            $article->setImg($orignalImg);
+            $article->setImg($originalImg);
         }
     }
+    
 }
