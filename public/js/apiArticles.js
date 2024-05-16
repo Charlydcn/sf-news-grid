@@ -1,66 +1,17 @@
-// --------------------------------------------------------------------------------------------------------
-// hydratation articles homepage --------------------------------------------------------------------------
-const API_ENDPOINT = "https://newsapi.org/v2/top-headlines"
-const API_KEY = "a3bc1825ad8d416fafdaf29e5477dc77";
+// ----------------------------------------------------------------------------------------------------------------------------
+// -------------------- limiter le nombre de caractères sur les descriptions et titres des articles en homepage ---------------
+$('.article-description').each(function(index, description) {
+    description.innerHTML = trimString(description.innerHTML, 100);
+})
 
-// appel API
-function apiCall(country, language, size) {
-    $.ajax({
-        url: `${API_ENDPOINT}?country=${country}&language=${language}&pageSize=${size}&apiKey=${API_KEY}`,
-        method: 'GET',
-        dataType: 'json',
-        success: function(data) {
-            console.log(data['articles'])
-            displayArticles(data['articles']);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.error('#0001 - Error:', errorThrown);
-            console.error('#0001 - Error:', textStatus);
-            console.error('#0001 - Error:', jqXHR);
-        }
-    });
-}
+$('.article-title a').each(function(index, title) {
+    title.innerHTML = trimString(title.innerHTML, 62);
+})
+// ----------------------------------------------------------------------------------------------------------------------------
 
-// fonction permettant d'hydrater les .cards vides en HTML (afficher les articles)
-function displayArticles(articles) {
-    // couleur aléatoire pour le nom de la source de l'article
-    var colors = ['yellow', 'blue', 'purple'];
-    // conteneur html des articles
-    var cards = $('.grid-container .card');
-    // on vérifie qu'il y a assez d'articles dans la réponse de l'appel API pour hydrater les cards nécessaire
-    if (cards.length < articles.length) {
-        console.error("Il n'y a pas assez de cartes dans le HTML pour tous les articles.");
-        return;
-    }
 
-    // pour chaque card dans le conteneur .grid-container
-    cards.each(function(index, card) {
-        // si le nombre d'articles récupérés ne suffit pas pour hydrater tous les éléments HTML, erreur
-        if (index >= articles.length) return false;
-
-        // on utilise le mot-clé "let" car il a une portée de 'bloc' et non de fonction comme "var" donc c'est plus approprié ici
-
-        // on récupère l'article dans le tableau articles de l'API en utilisant l'index de la card actuelle (boucle cards.each())
-        let article = articles[index];
-
-        // si l'article n'a pas d'image, image de remplacement
-        let img = article['urlToImage'] ? article['urlToImage'] : '/public/img/missing.jpg';
-        // couleur aléatoire dans le tableau de couleur
-        let color = colors[Math.floor(Math.random() * colors.length)];
-        // on limite le titre à 35 caractères avec une fonction de trim personnalisée pour ne pas couper en plein milieu d'un mot
-        let title = article['title'] ? trimString(article['title'], 35) : 'No title found';
-        // limite la description aussi
-        let description = article['description'] ? trimString(article['description'], 150) : 'No description found';
-
-        // on hydrate les balises vides avec les données récupérées
-        $(card).find('img').attr('src', img);
-        $(card).find('h4').text(article['source']['name']).addClass(color);
-        $(card).find('h3 a').text(title);
-        $(card).find('p').text(description);
-    });
-}
-
-// fonction de trim personnalisée pour limiter un string à une certaine longueur sans couper en plein milieu d'un mot
+// ----------------------------------------------------------------------------------------------------------------------------
+// fonction de trim personnalisée pour limiter un string à une certaine longueur sans couper en plein milieu d'un mot ---------
 function trimString(title, maxLength) {
     if (title.length <= maxLength) {
         return title;
@@ -74,7 +25,55 @@ function trimString(title, maxLength) {
 
     return trimmed + '...';
 }
+// ----------------------------------------------------------------------------------------------------------------------------
 
-console.log(apiCall('us', 'en', '7'));
-console.log('test');
-// --------------------------------------------------------------------------------------------------------
+
+
+// ----------------------------------------------------------------------------------------------------------------------------
+// ------------------- API ----------------------------------------------------------------------------------------------------
+const API_ENDPOINT = "https://newsapi.org/v2/top-headlines"
+const API_KEY = "a3bc1825ad8d416fafdaf29e5477dc77";
+
+// appel API
+function apiCall(country, language, size) {
+    $.ajax({
+        url: `${API_ENDPOINT}?country=${country}&language=${language}&pageSize=${size}&apiKey=${API_KEY}`,
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            console.log(data);
+            displayArticles(data['articles'], 5);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error('#0001 - Error:', errorThrown);
+            console.error('#0001 - Error:', textStatus);
+            console.error('#0001 - Error:', jqXHR);
+        }
+    });
+}
+// ----------------------------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------------------------
+
+
+
+// ----------------------------------------------------------------------------------------------------------------------------
+// afficher x articles dans la deuxième card sur la homepage sous forme de liste ----------------------------------------------
+function displayArticles(articles, nb) {
+        let newsArticles = $('<div>').append('<h3>News Articles</h3><ul class="list"></ul><p>Source: newsapi.org</p>');
+        let ul = newsArticles.find('ul');  // sélection de la nouvelle ul dans le dom
+    
+        // vérifier que les articles aient un titre (content) correct, puis en sélectionner X (nb en param de méthode) pour les insérer
+        articles.filter(article => article.content && article.content.length > 0 && article.content !== "[Removed]")
+            .slice(0, nb)
+            .forEach(article => {
+                ul.append(`<li>${trimString(article.content, 40)}</li>`); // li : contenu de l'article trimmé par la méthode perso
+            });
+    
+        // vider la deuxième card et l'hydrater avec newsArticles créé précedemment
+        $('.home-articles .card:nth-of-type(2)').empty().append(newsArticles);
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------
+
+// appel initial de l'api
+apiCall('us', 'en', '20');
