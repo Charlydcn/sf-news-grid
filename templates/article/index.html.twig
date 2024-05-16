@@ -24,7 +24,7 @@
                     <img src="{{ asset('/img/articles_images/' ~ img) }}">
     
                     <div>
-                        <h4 class="sports">{{ article.category.name }}</h4>
+                        <h4 class="sports" style="background-color: {{ article.category.color ? article.category.color : 'var(--red)' }}">{{ article.category.name }}</h4>
                         <h3>
                             <a href="{{ path('show_article', {'id': article.id})}}">{{ article.title }}</a>
                         </h3>
