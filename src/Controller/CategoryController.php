@@ -40,6 +40,22 @@ class CategoryController extends AbstractController
                 }
             }
 
+            $colors = [
+                '#1A1423',
+                '#3D314A',
+                '#684756',
+                '#841C26',
+                '#0B032D',
+                '#464E47',
+                '#49393B',
+                '#3C3C15',
+                '#7A6000',
+            ];
+
+            if(!$category->getColor()) {
+                $category->setColor(array_rand($colors));
+            }
+
             $entityManager->persist($category);
             $entityManager->flush();
 
