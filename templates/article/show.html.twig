@@ -12,14 +12,16 @@
         <h1>{{ article.title }}</h1>
 
         <article class="card">
-            <img src="{{ asset('/img/articles_images/' ~ article.img) }}">
+            {% set img = article.img ? article.img : 'missing.jpg' %}
+
+            <img src="{{ asset('/img/articles_images/' ~ img) }}">
 
             <div>
                 <h4 class="sports">{{ article.category.name }}</h4>
                 <h3>
                     <a href="{{ path('show_article', {'id': article.id})}}">{{ article.title }}</a>
                 </h3>
-                <p>{{ article.description }}</p>
+                <p>{{ article.description|raw }}</p>
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <ul class="action-ul">
