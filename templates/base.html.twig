@@ -49,32 +49,36 @@
 
         <aside class="side-btns-container">
             <ul>
-                <li>
-                    {% if app.user %}
+                
+                {% if app.user %}
+                    <li>
                         <a class="red" href="{{ path('app_logout')}}">
                             <i class="fa-solid fa-right-to-bracket"></i>
                             Log out
                         </a>
-                    {% else %}
+                    </li>
+                {% else %}
+                    <li>
                         <a class="red" href="{{ path('app_login')}}">
                             <i class="fa-solid fa-circle-user"></i>
                             Log in
                         </a>
-                    {% endif %}
-                </li>
+                    </li>
 
-                <li>
-                    <a class="yellow" href="{{ path('app_logout')}}">
-                        {# <i class="fa-solid fa-user"></i> #}
-                        <i class="fa-regular fa-pen-to-square"></i>
-                        Register
-                    </a>
-                </li>
+                    <li>
+                        <a class="yellow" href="{{ path('app_logout')}}">
+                            {# <i class="fa-solid fa-user"></i> #}
+                            <i class="fa-regular fa-pen-to-square"></i>
+                            Register
+                        </a>
+                    </li>
+                {% endif %}
+                    
             </ul>
         </aside>
         
         <nav>
-            <div class="container">
+            <div class="container big-container">
                 <!-- logo -->
                 <a href="{{ path('home')}}">
                     <img src="{{ asset('/img/logotext-dark.png')}}">
