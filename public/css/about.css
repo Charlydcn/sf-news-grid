@@ -15,8 +15,7 @@ main > .container > :first-child {
 main > .container > :last-child {
     background-color: var(--red);
     color: white;
-    grid-column: span 1;
-    grid-row: span 1;
+    grid-area: span 1 / span 1;
 }
 /* ----------------------------------------------------------------------------------------------------- */
 
@@ -24,14 +23,18 @@ main > .container > :last-child {
 
 @media screen and (max-width: 1150px) {
     
-    .about-container {
+    main > .container {
         grid-template: repeat(3, 1fr) / repeat(2, 1fr);
     }
 }
 
 @media screen and (max-width: 768px) {
 
-    .about-container {
+    main > .container {
         grid-template: repeat(3, 1fr) / repeat(2, 1fr);
+    }
+
+    main > .container > :last-child {
+        grid-area: span 1 / span 2;
     }
 }
