@@ -21,7 +21,12 @@ class ArticleType extends AbstractType
 
             ->add('title', TextType::class)
 
-            ->add('description', TextareaType::class)
+            ->add('description', TextareaType::class, [
+                'required' => false,
+                'attr' => [
+                    'class' => 'ckeditor',
+                ],
+            ])
 
             ->add('img', FileType::class, [
                 'label' => 'Image',
