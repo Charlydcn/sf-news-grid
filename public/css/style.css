@@ -70,6 +70,7 @@ section {
     width: clamp(50rem, 90vw, 66rem);
     max-width: 80vw;
     margin: auto;
+    align-items: start;
 }
 
 .small-container {
@@ -300,34 +301,17 @@ nav a {
 
 .side-btns-container li:first-of-type a {
     border-top-left-radius: 3px;
+    background-color: var(--red);
 }
 
 .side-btns-container li:last-of-type a {
+    background-color: var(--yellow);
     border-bottom-left-radius: 3px;
 }
 
 .link-social {
     font-size: 2.25rem;
     opacity: 0.66;
-}
-
-.red {
-    background-color: var(--red);
-}
-
-.yellow,
-.sports {
-    background-color: var(--yellow);
-}
-
-.purple,
-.entertainment {
-    background-color: var(--purple);
-}
-
-.blue,
-.technology {
-    background-color: var(--blue);
 }
 
 /* ------------------------------------------------------------------------------------------------------ */
@@ -378,6 +362,22 @@ nav a {
     margin: .5rem 0;
 }
 
+.yellow {
+    background-color: var(--yellow);
+}
+
+.red {
+    background-color: var(--red);
+}
+
+.blue {
+    background-color: var(--blue);
+}
+
+.purple {
+    background-color: var(--purple);
+}
+
 .flex-container {
     display: flex;
     flex-direction: row;
@@ -385,6 +385,7 @@ nav a {
     align-items: stretch;
     gap: 1rem;
     margin: 1rem auto;
+    justify-content: center;
 }
 
 .flex-container > * {
@@ -420,7 +421,6 @@ nav a {
 
 .card > div {
     width: 100%;
-    height: 50%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
