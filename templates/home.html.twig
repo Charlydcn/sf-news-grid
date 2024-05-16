@@ -11,7 +11,7 @@
         <!-- intro -->
         <section>
             <article>
-                <h4 class="sports">SPORTS</h4>
+                <h4 class="yellow">SPORTS</h4>
                 <h1>SOME SPORTS ARTICLE</h1>
                 <p>
                     Lorem ipsum dolor sit amet consectetur apidisicing elit. Dolores molestias blanditiis natus vero, sapiente odio.
@@ -22,24 +22,26 @@
         </section>
     </header>
 
-    <section>
+    <section class="home-articles">
         <h2>EDITOR PICKS</h2>
 
         <div class="grid-container">
             {% for article in articles %}
             <article class="card">
-                <img src="{{ asset('/img/articles_images/' ~ article.img) }}">
+                <img src="{{ asset('/img/articles_images/' ~ article.img) }}" alt="Alt image">
 
                 <div>
-                    <h4>{{ article.category.name }}</h4>
+                    <h4 class="category {{ article.category.name|lower }}" style="background-color: {{ article.category.color ? article.category.color : 'var(--red)' }}">
+                        {{ article.category.name }}
+                    </h4>
 
-                    <h3>
+                    <h3 class="article-title">
                         <a href="{{ path('show_article', {'id': article.id} )}}">
                             {{ article.title }}
                         </a>
                     </h3>
 
-                    <p>{{ article.description }}</p>
+                    <p class="article-description">{{ article.description }}</p>
                 </div>
             </article>
             {% endfor %}
@@ -48,6 +50,6 @@
 
 {% endblock %}
 
-{% block javacripts %}
+{% block javascripts %}
     <script src="{{ asset('/js/apiArticles.js')}}"></script>
-{% endblock javacripts %}
+{% endblock javascripts %}
