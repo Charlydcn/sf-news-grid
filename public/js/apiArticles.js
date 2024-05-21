@@ -41,7 +41,7 @@ function apiCall(country, language, size) {
         method: 'GET',
         dataType: 'json',
         success: function(data) {
-            console.log(data);
+            console.log('Récupération d\'articles depuis l\'api "newsapi.org" ..', data);
             displayArticles(data['articles'], 5);
         },
         error: function(jqXHR, textStatus, errorThrown) {
