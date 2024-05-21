@@ -26,25 +26,30 @@
         <h2>EDITOR PICKS</h2>
 
         <div class="grid-container">
-            {% for article in articles %}
-            <article class="card">
-                <img src="{{ asset('/img/articles_images/' ~ article.img) }}" alt="Alt image">
+            {% if articles|length > 0 %}
+                {% for article in articles %}
+                <article class="card">
+                    <img src="{{ asset('/img/articles_images/' ~ article.img) }}" alt="Alt image">
 
-                <div>
-                    <h4 class="category {{ article.category.name|lower }}" style="background-color: {{ article.category.color ? article.category.color : 'var(--red)' }}">
-                        {{ article.category.name }}
-                    </h4>
+                    <div>
+                        <h4 class="category {{ article.category.name|lower }}" style="background-color: {{ article.category.color ? article.category.color : 'var(--red)' }}">
+                            {{ article.category.name }}
+                        </h4>
 
-                    <h3 class="article-title">
-                        <a href="{{ path('show_article', {'id': article.id} )}}">
-                            {{ article.title }}
-                        </a>
-                    </h3>
+                        <h3 class="article-title">
+                            <a href="{{ path('show_article', {'id': article.id} )}}">
+                                {{ article.title }}
+                            </a>
+                        </h3>
 
-                    <p class="article-description">{{ article.description }}</p>
-                </div>
-            </article>
-            {% endfor %}
+                        <p class="article-description">{{ article.description }}</p>
+                    </div>
+                </article>
+                {% endfor %}
+
+            {% else %}
+                <h3>No articles yet</h3>
+            {% endif %}
         </div>
     </section>
 
