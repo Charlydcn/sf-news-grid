@@ -16,33 +16,27 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{ asset('/bib/CKEditor/ckeditor.min.js')}}"></script>
+    <script src="https://cdn.tiny.cloud/1/q1svp1lkl02amt6usw2mkplc0oyimvr6sbl2lxgb5hqxec6h/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
-        $(document).ready(function() {
-            let editorInstance;
+        tinymce.init({
+            selector: '#article_description',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            height: 300
+        });
 
-            ClassicEditor
-                .create(document.querySelector('#article_description'))
-                .then(editor => {
-                    editorInstance = editor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-    
-            $('form').on('submit', function(e) {
-                e.preventDefault();
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-                var editorData = editorInstance.getData();
-    
-                if (!editorData.trim()) {
-                    alert('Please enter the description.');
-                    return;
-                }
+            var editorData = tinymce.get('article_description').getContent();
 
-                this.submit();
-            });
+            if (!editorData.trim()) {
+                alert('Please enter the description.');
+                return;
+            }
+
+            this.submit();
         });
     </script>
-{% endblock javascripts %}
+{% endblock %}
