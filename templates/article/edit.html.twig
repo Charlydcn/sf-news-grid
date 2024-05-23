@@ -22,6 +22,24 @@
     <script src="https://cdn.tiny.cloud/1/q1svp1lkl02amt6usw2mkplc0oyimvr6sbl2lxgb5hqxec6h/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 
     <script>
-        
+        tinymce.init({
+            selector: '#article_description',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            height: 300
+        });
+
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            var editorData = tinymce.get('article_description').getContent();
+
+            if (!editorData.trim()) {
+                alert('Please enter the description.');
+                return;
+            }
+
+            this.submit();
+        });
     </script>
 {% endblock %}
